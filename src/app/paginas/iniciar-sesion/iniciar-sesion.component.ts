@@ -6,6 +6,7 @@ import { Router, RouterLink } from '@angular/router';
 // FIREBASE
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup, getRedirectResult } from "firebase/auth";
+import { getFirestore, doc, getDoc, setDoc, updateDoc, Firestore } from 'firebase/firestore';
 
 
 const EMAIL_PATTERN = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,3}(\.[a-zA-Z]{2})?$/i;
@@ -74,33 +75,62 @@ export class IniciarSesionComponent {
 
 
   entrar() {
+  localStorage.setItem('usuario', '');
+  signInWithPopup(this.auth, provider)
+    .then(async (result) => {
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential?.accessToken;
+      console.log(token);
+      
+      // La información del usuario de Firebase
+      const user = result.user;
+      console.info(user);
+      
+      // Verificar si el usuario ya existe en Firestore
+      const db = getFirestore(this.app);
+      const userDocRef = doc(db, 'users', user.uid); // Usamos el UID de Firebase Authentication como ID del documento
+      
+      const userDoc = await getDoc(userDocRef);
+      if (!userDoc.exists()) {
+        // Si el usuario no existe, crearlo con un rol por defecto
+        await setDoc(userDocRef, {
+          email: user.email,
+          nombre: user.displayName,
+          id: user.uid,
+          rol: 'user', // Asignar un rol por defecto
+        });
+      } else {
+        // Si el usuario ya existe, puedes obtener el rol
+        const userData = userDoc.data();
+        console.log('Rol del usuario:', userData?.['rol']);
+      }
+      
+      // Ahora, guardar los datos en localStorage, incluyendo el rol
+      const userData = {
+        email: user.email,
+        nombre: user.displayName,
+        id: user.uid,
+        rol: userDoc.exists() ? userDoc.data()?.['rol'] : 'user', // Guardar el rol
+      };
+      
+      localStorage.setItem('usuario', JSON.stringify(userData));
+      
+      // Redirigir al usuario a la página de gestión
+      this.router.navigate(['/gestion']);
+    })
+    .catch((error) => {
+      // Mostrar el error completo para diagnóstico
+      console.error('Error en la autenticación:', error);
+      
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      const email = error.customData ? error.customData.email : null; // Para evitar errores de undefined
+      
+      console.log(`Error: ${errorCode} - ${errorMessage}`);
+      console.log(`Email: ${email}`);
+    });
+}
 
-    localStorage.setItem('usuario', '');
-    signInWithPopup(this.auth, provider)
-      .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential?.accessToken;
-        console.log(token);
-        // The signed-in user info.
-        const user = result.user;
-        console.info(user);
-        localStorage.setItem('usuario', '{"email":"' + user.email + '","nombre":"' + user.displayName
-          + '","id":"' + user.uid + '"}');
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
-      }).catch((error) => {
-  // Mostrar el error completo para diagnóstico
-  console.error('Error en la autenticación:', error);
-
-  const errorCode = error.code;
-  const errorMessage = error.message;
-  const email = error.customData ? error.customData.email : null; // Para evitar errores de undefined
-
-  console.log(`Error: ${errorCode} - ${errorMessage}`);
-  console.log(`Email: ${email}`);
-});
-  }
 }
 
 const firebaseConfig = {

@@ -13,7 +13,8 @@ import { CommonModule } from '@angular/common';
 
 export class ChatComponent implements OnInit {
   userId: string = '';
-  userName: string = '';  // Variable para almacenar el nombre del usuario
+  userName: string = '';
+  userRole: string = '';
   conversationId: string = '';
   messages: any[] = [];
   newMessage: string = '';
@@ -24,8 +25,9 @@ export class ChatComponent implements OnInit {
     const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
     this.userId = usuario?.id || '';
     this.userName = usuario?.nombre || 'Usuario Anónimo';  // Recuperamos el nombre
+    this.userRole = usuario?.rol || 'user'; // Accedemos al rol desde localStorage
 
-    if (!this.userId || !this.userName) {
+    if (!this.userId) {
       console.error('No se encontró el usuario en localStorage');
       return;
     }
@@ -45,11 +47,17 @@ export class ChatComponent implements OnInit {
   }
 
   async sendMessage() {
-    if (!this.conversationId || !this.newMessage.trim()) return;
+  if (!this.conversationId || !this.newMessage.trim()) return;
 
-    // Enviar el mensaje con el nombre del usuario
-    await this.chatService.sendMessage(this.conversationId, this.newMessage, this.userName);
-    this.newMessage = ''; // Limpiar campo de mensaje
-  }
+  // Obtener el rol y nombre del usuario desde localStorage
+  const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+  const userName = usuario?.nombre || 'Usuario';
+  const userRole = usuario?.rol || 'user';  // Se asegura de que el rol esté disponible
+
+  // Enviar el mensaje con nombre, rol y texto
+  await this.chatService.sendMessage(this.conversationId, this.newMessage, userName, userRole);
+  this.newMessage = '';
+}
+
 }
 

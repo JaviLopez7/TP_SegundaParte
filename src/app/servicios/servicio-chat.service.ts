@@ -21,11 +21,12 @@ export class ServicioChatService {
   private app = initializeApp(firebaseConfig);
   private db: Firestore = getFirestore(this.app);
 
-  async sendMessage(conversationId: string, text: string, senderName: string): Promise<void> {
+  async sendMessage(conversationId: string, text: string, senderName: string, senderRole: string): Promise<void> {
     const messagesRef = collection(this.db, `conversations/${conversationId}/messages`);
     await addDoc(messagesRef, {
       text,
       senderName, // Almacenamos el nombre del remitente
+      senderRole,  // Guardamos el rol del usuario
       timestamp: new Date()
     });
   }
