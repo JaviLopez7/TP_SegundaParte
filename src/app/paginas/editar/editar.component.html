@@ -1,0 +1,77 @@
+<!-- Navbar fija -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary bg-opacity-75 shadow fixed-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold" routerLink="/gestion">Gestión</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav gap-2">
+        <li class="nav-item">
+          <a class="btn btn-outline-light" routerLink="/gestion-producto">Gestión de Productos</a>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-outline-light" routerLink="/factura-carrito">Gestión de Facturación</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Contenedor principal con margen para no taparse con navbar -->
+<div class="container-fluid d-flex justify-content-center align-items-start pt-5 mt-5" 
+     style="background: url('URL_DE_TU_IMAGEN') no-repeat center center; background-size: cover; min-height: 100vh;">
+  <div class="card shadow-lg bg-light bg-opacity-75 p-4 w-100" style="max-width: 1000px;">
+    <h2 class="text-center mb-4">Listado de Productos</h2>
+
+    <table class="table table-hover table-bordered align-middle text-center shadow-sm">
+      <thead class="table-success">
+        <tr>
+          <th (click)="ordenarPor('nombre')" style="cursor: pointer;">
+            Nombre
+            <i class="bi" [ngClass]="{
+              'bi-caret-up-fill': campoOrden === 'nombre' && ordenAscendente,
+              'bi-caret-down-fill': campoOrden === 'nombre' && !ordenAscendente,
+              'bi-caret-down': campoOrden !== 'nombre'
+            }"></i>
+          </th>
+          <th (click)="ordenarPor('categoria')" style="cursor: pointer;">
+            Categoría
+            <i class="bi" [ngClass]="{
+              'bi-caret-up-fill': campoOrden === 'categoria' && ordenAscendente,
+              'bi-caret-down-fill': campoOrden === 'categoria' && !ordenAscendente,
+              'bi-caret-down': campoOrden !== 'categoria'
+            }"></i>
+          </th>
+          <th (click)="ordenarPor('precio')" style="cursor: pointer;">
+            Precio
+            <i class="bi" [ngClass]="{
+              'bi-caret-up-fill': campoOrden === 'precio' && ordenAscendente,
+              'bi-caret-down-fill': campoOrden === 'precio' && !ordenAscendente,
+              'bi-caret-down': campoOrden !== 'precio'
+            }"></i>
+          </th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let producto of productos">
+          <td>{{ producto.nombre }}</td>
+          <td>{{ producto.categoria }}</td>
+          <td>${{ producto.precio }}</td>
+          <td>
+            <a [routerLink]="['/editar-producto', producto.id]" class="btn btn-outline-primary btn-sm">
+              Editar
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+

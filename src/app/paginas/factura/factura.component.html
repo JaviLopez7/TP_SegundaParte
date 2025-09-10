@@ -1,0 +1,55 @@
+<div class="container mx-auto px-4 py-6">
+  <div class="overflow-x-auto shadow-md rounded-lg mb-4">
+    <table class="table table-bordered text-center align-middle w-100">
+      <thead class="table-light">
+        <tr>
+          <th>Producto</th>
+          <th>Cantidad</th>
+          <th>Precio Unitario ARS</th>
+          <th>Total ARS</th>
+          <th>Precio Unitario USD</th>
+          <th>Total USD</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let producto of productos">
+          <td>{{ producto.nombre }}</td>
+          <td>{{ producto.cantidad || 1 }}</td>
+          <td>{{ producto.precio | currency:'ARS':'symbol':'1.2-2' }}</td>
+          <td class="text-success fw-semibold">
+            {{ calcularTotalARS(producto.precio, producto.cantidad) | currency:'ARS':'symbol':'1.2-2' }}
+          </td>
+          <td>
+            {{ (producto.precio / tipoCambio) | currency:'USD':'symbol':'1.2-2' }}
+          </td>
+          <td class="text-success fw-semibold">
+            {{ calcularTotalUSD(producto.precio, producto.cantidad) | currency:'USD':'symbol':'1.2-2' }}
+          </td>
+        </tr>
+      </tbody>
+      <tfoot class="table-light fw-semibold">
+        <tr>
+          <td>Total</td>
+          <td>{{ getTotalCantidad() }}</td>
+          <td></td>
+          <td class="text-success">{{ getTotalARS() | currency:'ARS':'symbol':'1.2-2' }}</td>
+          <td></td>
+          <td class="text-success">{{ getTotalUSD() | currency:'USD':'symbol':'1.2-2' }}</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="d-flex justify-content-end mt-4 gap-2">
+    <button 
+      (click)="onConfirmarCompra()"
+      class="btn btn-primary"
+      [disabled]="!productos || productos.length === 0">
+      <i class="fas fa-check-circle me-2"></i> Confirmar Compra
+    </button>
+  </div>
+</div>
+
+
+
+
