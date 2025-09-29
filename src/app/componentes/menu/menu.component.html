@@ -1,0 +1,42 @@
+<!-- Espaciador para no tapar la navbar -->
+<div style="height: 80px;"></div>
+<!-- MENU GLOBAL -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary bg-opacity-75 shadow fixed-top" style="z-index: 9999;">
+  <div class="container">
+    <a class="navbar-brand fw-bold" routerLink="/gestion">Gestión</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav gap-2">
+        <!-- Solo para administradores -->
+        <li class="nav-item" *ngIf="esAdministrador">
+          <a class="btn btn-outline-light" routerLink="/gestion-producto">Gestión de Productos</a>
+        </li>
+
+        <!-- Para todos los roles -->
+        <li class="nav-item" *ngIf="esAdministrador || esCliente">
+          <a class="btn btn-outline-light" routerLink="/factura-carrito">Gestión de Facturación</a>
+        </li>
+
+        <!-- Solo para administradores -->
+        <li class="nav-item" *ngIf="esAdministrador">
+          <a class="btn btn-outline-light" routerLink="/grafico-dolar">Gráfico del Dólar</a>
+        </li>
+        <li class="nav-item" *ngIf="esAdministrador">
+          <a class="btn btn-outline-light" routerLink="/grafico-ventas">Gráfico de Ventas</a>
+        </li>
+        <li class="nav-item" *ngIf="esAdministrador">
+          <a class="btn btn-outline-light" routerLink="/grafico-productos">Gráfico de Productos</a>
+        </li>
+
+        <!-- Visible siempre que haya sesión activa -->
+        <li *ngIf="usuario">
+          <button class="btn btn-outline-light" (click)="cerrarSesion()">Cerrar sesión</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

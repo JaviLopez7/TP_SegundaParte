@@ -1,0 +1,27 @@
+<div class="chat-container">
+  <h2 class="chat-title">Chat</h2>
+
+  <!-- Contenedor de mensajes -->
+  <div class="messages" #messagesContainer>
+    <div *ngFor="let msg of messages" [ngClass]="msg.senderRole === 'Administrador' ? 'message admin' : 'message client'">
+      <div class="message-meta">
+        <span class="sender-name">{{ msg.senderName }}</span>
+        <span class="sender-role">({{ msg.senderRole }})</span>
+      </div>
+      <div class="message-text">
+        {{ msg.text }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Área de entrada -->
+  <div class="input-area">
+    <input
+      type="text"
+      [(ngModel)]="newMessage"
+      placeholder="Escribe tu mensaje..."
+      (keyup.enter)="sendMessage()"
+    />
+    <button (click)="sendMessage()">Enviar</button>
+  </div>
+</div>

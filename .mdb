@@ -1,0 +1,10 @@
+{
+  "projectName": "primerparcial",
+  "meta": {
+    "type": "backend"
+  },
+  "backend": {
+    "platform": "node17"
+  },
+  "hash": "0dd5331c"
+}

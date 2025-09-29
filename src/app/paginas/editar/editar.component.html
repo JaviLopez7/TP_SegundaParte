@@ -1,0 +1,55 @@
+<!-- Contenedor principal con margen para no taparse con navbar -->
+<div class="container-fluid d-flex justify-content-center align-items-start pt-5 mt-5" 
+     style="background: url('URL_DE_TU_IMAGEN') no-repeat center center; background-size: cover; min-height: 100vh;">
+  <div class="card shadow-lg bg-light bg-opacity-75 p-4 w-100" style="max-width: 1000px;">
+    <h2 class="text-center mb-4">Listado de Productos</h2>
+
+    <table class="table table-hover table-bordered align-middle text-center shadow-sm">
+      <thead class="table-success">
+        <tr>
+          <th (click)="ordenarPor('nombre')" style="cursor: pointer;">
+            Nombre
+            <i class="bi" [ngClass]="{
+              'bi-caret-up-fill': campoOrden === 'nombre' && ordenAscendente,
+              'bi-caret-down-fill': campoOrden === 'nombre' && !ordenAscendente,
+              'bi-caret-down': campoOrden !== 'nombre'
+            }"></i>
+          </th>
+          <th (click)="ordenarPor('categoria')" style="cursor: pointer;">
+            Categoría
+            <i class="bi" [ngClass]="{
+              'bi-caret-up-fill': campoOrden === 'categoria' && ordenAscendente,
+              'bi-caret-down-fill': campoOrden === 'categoria' && !ordenAscendente,
+              'bi-caret-down': campoOrden !== 'categoria'
+            }"></i>
+          </th>
+          <th (click)="ordenarPor('precio')" style="cursor: pointer;">
+            Precio
+            <i class="bi" [ngClass]="{
+              'bi-caret-up-fill': campoOrden === 'precio' && ordenAscendente,
+              'bi-caret-down-fill': campoOrden === 'precio' && !ordenAscendente,
+              'bi-caret-down': campoOrden !== 'precio'
+            }"></i>
+          </th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let producto of productos">
+          <td>{{ producto.nombre }}</td>
+          <td>{{ producto.categoria }}</td>
+          <td>${{ producto.precio }}</td>
+          <td>
+            <a [routerLink]="['/editar-producto', producto.id]" class="btn btn-outline-primary btn-sm">
+              Editar
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+

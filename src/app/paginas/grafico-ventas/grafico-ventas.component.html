@@ -1,0 +1,35 @@
+<!-- Contenedor principal -->
+<div class="container py-3" style="max-width: 980px; position: relative; z-index: 1;">
+  
+  <!-- Título con fondo elegante -->
+  <div class="text-center mb-4">
+    <div class="d-inline-block bg-primary bg-opacity-75 text-white px-4 py-2 rounded-3">
+      <h4 class="fw-semibold m-0">Gráfico de Ventas</h4>
+      <small class="d-block mt-1">Agrupado por {{ agrupacion }}</small>
+    </div>
+  </div>
+
+  <!-- Botones -->
+  <div class="d-flex flex-wrap align-items-center gap-2 mb-3 justify-content-center">
+    <button class="btn btn-light text-primary border-primary" (click)="cambiarAgrupacion('dia')">
+      Por día
+    </button>
+
+    <button class="btn btn-light text-primary border-primary" (click)="cambiarAgrupacion('semana')">
+      Por semana
+    </button>
+
+    <button class="btn btn-light text-primary border-primary" (click)="cambiarAgrupacion('mes')">
+      Por mes
+    </button>
+  </div>
+
+  <!-- Mensajes -->
+  <div *ngIf="cargando" class="alert alert-info text-center py-2">Cargando datos...</div>
+  <div *ngIf="error" class="alert alert-danger text-center py-2">{{ error }}</div>
+
+  <!-- Gráfico -->
+  <div class="card p-3" style="min-height: 420px;">
+    <canvas #canvasVentas></canvas>
+  </div>
+</div>

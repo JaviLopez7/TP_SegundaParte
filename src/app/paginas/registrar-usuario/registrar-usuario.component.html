@@ -1,0 +1,78 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100 bodyInicioRegistro" style="position: relative; z-index: 1;">
+  <div class="card shadow p-4" style="width: 100%; max-width: 500px;">
+    <h1 class="text-center mb-4">REGISTRAR USUARIO</h1>
+
+<div *ngIf="registroExitoso" class="alert alert-success text-center animate__animated animate__fadeIn">
+  ¡Usuario creado con éxito! Redirigiendo...
+</div>
+
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre</label>
+        <input id="nombre" class="form-control" formControlName="nombre" (keypress)="soloLetras($event)">
+        <div *ngIf="registerForm.get('nombre')?.touched && registerForm.get('nombre')?.invalid" class="text-danger mt-1">
+          <div *ngIf="registerForm.get('nombre')?.errors?.['required']">Campo obligatorio</div>
+          <div *ngIf="registerForm.get('nombre')?.errors?.['pattern']">Solo letras permitidas</div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="apellido" class="form-label">Apellido</label>
+        <input id="apellido" class="form-control" formControlName="apellido" (keypress)="soloLetras($event)">
+        <div *ngIf="registerForm.get('apellido')?.touched && registerForm.get('apellido')?.invalid" class="text-danger mt-1">
+          <div *ngIf="registerForm.get('apellido')?.errors?.['required']">Campo obligatorio</div>
+          <div *ngIf="registerForm.get('apellido')?.errors?.['pattern']">Solo letras permitidas</div>
+        </div>
+      </div>
+
+<!-- IMPLEMENTACION NUEVA -->
+      <div class="mb-3">
+  <label for="direccion" class="form-label">Dirección</label>
+  <input id="direccion" class="form-control" formControlName="direccion">
+  <div *ngIf="registerForm.get('direccion')?.touched && registerForm.get('direccion')?.invalid" class="text-danger mt-1">
+    <div *ngIf="registerForm.get('direccion')?.errors?.['required']">Campo obligatorio</div>
+  </div>
+</div>
+
+<div class="mb-3">
+  <label for="telefono" class="form-label">Teléfono</label>
+  <input id="telefono" class="form-control" formControlName="telefono">
+  <div *ngIf="registerForm.get('telefono')?.touched && registerForm.get('telefono')?.invalid" class="text-danger mt-1">
+    <div *ngIf="registerForm.get('telefono')?.errors?.['required']">Campo obligatorio</div>
+  </div>
+</div>
+
+
+      <div class="mb-3">
+        <label for="correo" class="form-label">Correo</label>
+        <input id="correo" class="form-control" formControlName="correo">
+        <div *ngIf="registerForm.get('correo')?.touched && registerForm.get('correo')?.invalid" class="text-danger mt-1">
+          <div *ngIf="registerForm.get('correo')?.errors?.['required']">Campo obligatorio</div>
+          <div *ngIf="registerForm.get('correo')?.errors?.['email']">Correo inválido</div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label">Contraseña</label>
+        <input type="password" id="password" class="form-control" formControlName="contrasenia">
+        <div *ngIf="registerForm.get('contrasenia')?.touched && registerForm.get('contrasenia')?.invalid" class="text-danger mt-1">
+          <div *ngIf="registerForm.get('contrasenia')?.errors?.['required']">Campo obligatorio</div>
+          <div *ngIf="registerForm.get('contrasenia')?.errors?.['pattern']">
+            Mínimo 6 caracteres, al menos una letra, un número y un símbolo
+          </div>
+        </div>
+      </div>
+      <div *ngIf="errorMsg" class="alert alert-danger text-center">
+  {{ errorMsg }}
+</div>
+
+      <button type="submit" class="btn btn-success w-100" [disabled]="registerForm.invalid">Registrar</button>
+      <div class="text-center mt-3">
+        <a routerLink="/iniciar-sesion">Volver</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+

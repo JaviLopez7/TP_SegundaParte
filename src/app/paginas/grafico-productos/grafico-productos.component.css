@@ -1,0 +1,15 @@
+.grafico-container {
+  background-color: #ffffff !important; /* Fondo blanco sólido */
+  max-width: 900px;
+  margin: 2rem auto;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  z-index: 9999;
+}
+
+canvas {
+  width: 100% !important;
+  height: 400px !important;
+  background-color: #ffffff !important; /* Evita transparencia del canvas */
+}

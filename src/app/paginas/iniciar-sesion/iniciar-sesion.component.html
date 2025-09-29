@@ -1,0 +1,47 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100 bodyInicioRegistro" style="position: relative; z-index: 1;">
+  <div class="card shadow p-4" style="width: 100%; max-width: 400px;">
+    <h1 class="text-center mb-4">INICIAR SESIÓN</h1>
+
+    <!-- Mensaje de error -->
+    <div *ngIf="errorMensaje" class="alert alert-danger text-center">
+      {{ errorMensaje }}
+    </div>
+
+    <form [formGroup]="formularioIniciarSesion" (ngSubmit)="loginTradicional()">
+      <div class="mb-3">
+        <label for="correo" class="form-label">Correo Electrónico</label>
+        <input id="correo" class="form-control" formControlName="correo">
+        <div *ngIf="correo.touched && correo.invalid" class="text-danger mt-1">
+          <div *ngIf="correo.errors?.['required']">Campo obligatorio</div>
+          <div *ngIf="correo.errors?.['pattern']">Formato incorrecto (ej: ejemplo&#64;correo.com)</div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="contrasena" class="form-label">Contraseña</label>
+        <input type="password" id="contrasena" class="form-control" formControlName="contrasenia">
+        <div *ngIf="contrasenia.touched && contrasenia.invalid" class="text-danger mt-1">
+          <div *ngIf="contrasenia.errors?.['required']">Campo obligatorio</div>
+          <div *ngIf="contrasenia.errors?.['minlength'] || contrasenia.errors?.['maxlength']">
+            La contraseña debe tener entre 3 y 15 caracteres
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary mt-2 w-100" type="submit">
+        Iniciar sesión (clientes y administradores)
+      </button>
+
+      <button class="btn btn-danger mt-3 w-100" type="button" (click)="loginConGoogle()">
+        Iniciar con Gmail (solo para clientes)
+      </button>
+
+
+
+      <div class="text-center mt-3">
+        ¿No tenés cuenta? <a routerLink="/registrar-usuario">Registrate acá</a>
+      </div>
+    </form>
+  </div>
+</div>
+

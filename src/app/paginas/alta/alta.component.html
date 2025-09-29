@@ -1,0 +1,59 @@
+
+
+<div *ngIf="mostrarMensajeExito"
+     class="position-fixed top-50 start-50 translate-middle alert alert-success shadow-lg text-center px-5 py-4 fs-4"
+     style="z-index: 1050; width: auto; max-width: 90%;">
+  ✅ Producto agregado con éxito
+</div>
+
+
+<!-- Contenedor principal -->
+<div class="container-fluid vh-100 d-flex justify-content-center align-items-center" style="background: url('URL_DE_TU_IMAGEN') no-repeat center center; background-size: cover;">
+  <div class="card shadow-lg bg-light bg-opacity-75 p-4" style="width: 500px;">
+    <div class="card-header bg-success text-white text-center">
+      <h2 class="mb-0 fs-3">Registro de Producto</h2>
+    </div>
+
+    <form #productoForm="ngForm" (ngSubmit)="onSubmit()" class="card-body d-flex flex-column gap-3 fs-5">
+      <div>
+        <label class="form-label">Nombre:</label>
+        <input type="text" name="nombre" [(ngModel)]="nombre" #nombreRef="ngModel" required class="form-control" [ngClass]="{'is-invalid': nombreRef.invalid && nombreRef.touched}">
+        <div *ngIf="nombreRef.invalid && nombreRef.touched" class="invalid-feedback">
+          El nombre es obligatorio.
+        </div>
+      </div>
+
+      <div>
+        <label class="form-label">Categoría:</label>
+        <input type="text" name="categoria" [(ngModel)]="categoria" #categoriaRef="ngModel" required class="form-control" [ngClass]="{'is-invalid': categoriaRef.invalid && categoriaRef.touched}">
+        <div *ngIf="categoriaRef.invalid && categoriaRef.touched" class="invalid-feedback">
+          La categoría es obligatoria.
+        </div>
+      </div>
+
+      <div>
+        <label class="form-label">Precio:</label>
+        <input type="number" name="precio" [(ngModel)]="precio" #precioRef="ngModel" required min="1" class="form-control" [ngClass]="{'is-invalid': precioRef.invalid && precioRef.touched}">
+        <div *ngIf="precioRef.invalid && precioRef.touched" class="invalid-feedback">
+          El precio es obligatorio y debe ser mayor a 0.
+        </div>
+      </div>
+
+      <div>
+        <label class="form-label">Descripción:</label>
+        <textarea name="descripcion" [(ngModel)]="descripcion" class="form-control" rows="3"></textarea>
+      </div>
+
+      <div>
+        <label class="form-label">Imagen (URL):</label>
+        <input type="text" name="imagen" [(ngModel)]="imagen" class="form-control">
+      </div>
+
+      <button type="submit" class="btn btn-success w-100 fs-5 mt-3">Guardar Producto</button>
+    </form>
+  </div>
+</div>
+
+
+
+

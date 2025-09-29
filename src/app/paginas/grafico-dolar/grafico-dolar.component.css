@@ -1,0 +1,12 @@
+nav.navbar {
+  z-index: 9999 !important;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  left: 0;
+}
+
+#canvasDolar {
+  z-index: 0;
+  position: relative;
+}
